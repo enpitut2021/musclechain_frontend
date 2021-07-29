@@ -55,8 +55,14 @@ class Graph extends Component {
       <XYPlot height={300} width={500} xType="ordinal">
         <VerticalGridLines />
         <HorizontalGridLines />
-        <XAxis />
-        <YAxis />
+        <XAxis title="date" position="end" />
+        <YAxis
+          title="calories"
+          position="end"
+          style={{
+            transform: "rotate(90)",
+          }}
+        />
         <LineSeries data={this.graph_data} />
       </XYPlot>
     );
