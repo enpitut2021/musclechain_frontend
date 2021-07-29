@@ -3,8 +3,11 @@ import "./App.css";
 import "../node_modules/react-vis/dist/style.css";
 import { XYPlot, LineSeries } from "react-vis";
 
+import Data from "./data.json";
+
 class Graph extends Component {
   render() {
+    console.log(Data.activity);
     const data = [
       { x: 0, y: 8 },
       { x: 1, y: 5 },
