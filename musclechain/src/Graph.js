@@ -9,10 +9,9 @@ const json_obj = Data.activity;
 const user = Data.user_id;
 
 class Graph extends Component {
-  render() {
-    console.log(user);
-    console.log(json_obj);
-    const data = [
+  constructor(props) {
+    super(props);
+    this.data = [
       { x: 0, y: 8 },
       { x: 1, y: 5 },
       { x: 2, y: 4 },
@@ -24,10 +23,15 @@ class Graph extends Component {
       { x: 8, y: 2 },
       { x: 9, y: 0 },
     ];
+    this.user = "";
+  }
+  render() {
+    console.log(user);
+    console.log(json_obj);
     return (
       <div className="App">
         <XYPlot height={300} width={300}>
-          <LineSeries data={data} />
+          <LineSeries data={this.data} />
         </XYPlot>
       </div>
     );
