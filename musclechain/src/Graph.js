@@ -26,6 +26,16 @@ class Graph extends Component {
     this.process_json(json_obj);
   }
 
+  change_date_format(date_string) {
+    var date_obj = new Date(date_string);
+    // console.log(date_obj);
+    var month = date_obj.getMonth() + 1;
+    var day = date_obj.getDate();
+    var formatted_date = month + "/" + day;
+    // console.log(formatted_date);
+    return formatted_date;
+  }
+
   process_json(json_datas) {
     var item = 0;
     var graph_datas = [];
@@ -33,17 +43,16 @@ class Graph extends Component {
       //日付はパースできる
       var date = json_datas[item]["date"];
       var calories = json_datas[item]["calories"];
+      date = this.change_date_format(date);
       var label = { x: date, y: calories };
-      console.log(label);
       graph_datas.push(label);
-      console.log(graph_datas);
     }
     this.graph_data = graph_datas;
   }
 
   render() {
     return (
-      <XYPlot height={300} width={300} xType="ordinal">
+      <XYPlot height={300} width={500} xType="ordinal">
         <VerticalGridLines />
         <HorizontalGridLines />
         <XAxis />
