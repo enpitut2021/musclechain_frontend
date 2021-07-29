@@ -5,9 +5,13 @@ import { XYPlot, LineSeries } from "react-vis";
 
 import Data from "./data.json";
 
+const json_obj = Data.activity;
+const user = Data.user_id;
+
 class Graph extends Component {
   render() {
-    console.log(Data.activity);
+    console.log(user);
+    console.log(json_obj);
     const data = [
       { x: 0, y: 8 },
       { x: 1, y: 5 },
