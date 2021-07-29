@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
+import UserInput from "./UserInput";
 
 class App extends Component {
   render() {
@@ -9,6 +10,7 @@ class App extends Component {
 	  <div>
 	      <HeaderBar />
 	      <Graph />
+	      <UserInput queryText="１日の目標消費カロリーを入力(kcal)："/>
 	  </div>
       );
   }
