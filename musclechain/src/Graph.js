@@ -22,6 +22,8 @@ class Graph extends Component {
     // 値は整数
     this.graph_data = [];
     this.user = "";
+    //初期化したい時はここで呼べば良さそう
+    this.process_json(json_obj);
   }
 
   process_json(json_datas) {
@@ -40,8 +42,6 @@ class Graph extends Component {
   }
 
   render() {
-    console.log(this.process_json(json_obj));
-    console.log(this.graph_data);
     return (
       <XYPlot height={300} width={300} xType="ordinal">
         <VerticalGridLines />
