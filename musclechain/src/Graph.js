@@ -16,49 +16,40 @@ const json_obj = Data.activity;
 const user = Data.user_id;
 
 class Graph extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     // xとyはキー
     // 値は整数
-    this.data = [
-      { x: 0, y: 8 },
-      { x: 1, y: 5 },
-      { x: 2, y: 4 },
-      { x: 3, y: 9 },
-      { x: 4, y: 1 },
-      { x: 5, y: 7 },
-      { x: 6, y: 6 },
-      { x: 7, y: 3 },
-      { x: 8, y: 2 },
-      { x: 9, y: 0 },
-    ];
+    this.graph_data = [];
     this.user = "";
   }
 
   process_json(json_datas) {
-    for (var item in json_datas) {
+    var item = 0;
+    var graph_datas = [];
+    for (item in json_datas) {
       //日付はパースできる
       var date = json_datas[item]["date"];
       var calories = json_datas[item]["calories"];
-      // this.data[item]["x"] = date;
-      // this.data[item]["y"] = calories;
+      var label = { x: date, y: calories };
+      console.log(label);
+      graph_datas.push(label);
+      console.log(graph_datas);
     }
-    console.log(typeof this.data[0]["x"]);
+    this.graph_data = graph_datas;
   }
 
   render() {
-    console.log(user);
     console.log(this.process_json(json_obj));
+    console.log(this.graph_data);
     return (
-      <div className="App">
-        <XYPlot height={300} width={300}>
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <XAxis />
-          <YAxis />
-          <LineSeries data={this.data} />
-        </XYPlot>
-      </div>
+      <XYPlot height={300} width={300} xType="ordinal">
+        <VerticalGridLines />
+        <HorizontalGridLines />
+        <XAxis />
+        <YAxis />
+        <LineSeries data={this.graph_data} />
+      </XYPlot>
     );
   }
 }
