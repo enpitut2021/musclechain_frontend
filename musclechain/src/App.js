@@ -4,8 +4,16 @@ import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
 import Balance from "./Balance";
+import BalanceLog from "./BalanceLog";
 
 const api_url = 'https://682e44032f57.ngrok.io/';
+
+const balanceLogSample = [
+    {"date": "7/26", "diff": 10},
+    {"date": "7/27", "diff": 10},
+    {"date": "7/28", "diff": 10},
+    {"date": "7/29", "diff": 23},
+    {"date": "7/30", "diff": -3}, ];
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +21,8 @@ class App extends Component {
     this.state = {
       goal: 0,
 	activity: [],
-	balance: 100
+	balance: 110,
+	balLog: []
     };
   }
 
@@ -21,6 +30,7 @@ class App extends Component {
 	this.get_activity_data();
 	this.getGoalData();
 	this.getBalance();
+	this.getBalanceLog();
     }
 
     // 理想的じゃない関数のまとめ方になってるから直したい
@@ -60,6 +70,23 @@ class App extends Component {
 	    });
 	};
 	// this.getJSONData(api_url + 'calories', handler);
+    }
+
+    getBalanceLog() {
+	console.log('Getting balance log data...');
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('Balance log data attrieved!');
+	    console.log(data);
+	    this.setState({
+		balance: data["balanceLog"]
+	    });
+	};
+	// this.getJSONData(api_url + 'calories', handler);
+	this.setState({
+	    balLog: balanceLogSample
+	});
+	
     }
 
 
@@ -109,6 +136,7 @@ class App extends Component {
           handleInput={(e) => this.handleInput(e)}
         />
 	  <Balance balance={this.state.balance}/>
+	  <BalanceLog balLog={this.state.balLog} />
       </div>
     );
   }
