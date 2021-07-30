@@ -4,6 +4,8 @@ import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
 
+const api_url = 'https://682e44032f57.ngrok.io/';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -16,33 +18,31 @@ class App extends Component {
     this.getGoalData();
   }
 
-  get_activity_data() {
-    console.log("Getting activity data...");
-    let handler = (data, e) => {
-      console.log(e);
-      console.log("Activity data attrieved!");
-      console.log(data);
-      this.setState({
-        activity: data,
-      });
-    };
-    this.getJSONData.bind(this)(
-      "http://8fadfda12fb8.ngrok.io/calories",
-      handler
-    );
-  }
+    get_activity_data() {
+	console.log('Getting activity data...');
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('Activity data attrieved!');
+	    console.log(data);
+	    this.setState({
+		activity: data
+	    });
+	};
+	this.getJSONData.bind(this)(api_url + 'calories', handler);
+    }
 
-  getGoalData() {
-    let handler = (data, e) => {
-      console.log(e);
-      console.log("Goal data attrieved!");
-      console.log(data);
-      this.setState({
-        goal: data["ret_goal"],
-      });
-    };
-    this.getJSONData.bind(this)("http://0961809a7fd9.ngrok.io/goals", handler);
-  }
+    getGoalData() {
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('Goal data attrieved!');
+	    console.log(data);
+	    this.setState({
+		goal: data["ret_goal"]
+	    });
+	};
+	this.getJSONData.bind(this)(api_url + 'goals', handler);
+    }
+
 
   getJSONData(url, handler) {
     let data;
