@@ -13,10 +13,12 @@ class App extends Component {
       goal: 0,
       activity: [],
     };
-
-    this.get_activity_data();
-    this.getGoalData();
   }
+
+    componentDidMount() {
+	this.get_activity_data();
+	this.getGoalData();
+    }
 
     get_activity_data() {
 	console.log('Getting activity data...');
@@ -28,7 +30,7 @@ class App extends Component {
 		activity: data
 	    });
 	};
-	this.getJSONData.bind(this)(api_url + 'calories', handler);
+	this.getJSONData(api_url + 'calories', handler);
     }
 
     getGoalData() {
@@ -37,10 +39,10 @@ class App extends Component {
 	    console.log('Goal data attrieved!');
 	    console.log(data);
 	    this.setState({
-		goal: data["ret_goal"]
+		goal: data["goal"]
 	    });
 	};
-	this.getJSONData.bind(this)(api_url + 'goals', handler);
+	this.getJSONData(api_url + 'goals', handler);
     }
 
 
