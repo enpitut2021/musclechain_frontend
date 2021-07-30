@@ -25,7 +25,6 @@ class Graph extends Component {
       user: "",
     };
 
-    // この関数はエラーを吐くよ
     console.log(this.props.goal);
   }
 
@@ -64,7 +63,7 @@ class Graph extends Component {
   }
 
   render() {
-    // 関数を呼ぶ
+    // データの処理を追加する
     this.handle_goal(this.props.goal);
     return (
       <XYPlot height={300} width={500} xType="ordinal">
