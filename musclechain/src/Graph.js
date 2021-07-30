@@ -16,14 +16,17 @@ const json_obj = Data.activity;
 const user = Data.user_id;
 
 class Graph extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // xとyはキー
     // 値は整数
-    this.graph_data = [];
-    this.user = "";
-    //初期化したい時はここで呼べば良さそう
-    this.process_json(json_obj);
+    this.state = {
+      graph_data: [],
+      user: "",
+    };
+
+    // この関数はエラーを吐くよ
+    console.log(this.props.goal);
   }
 
   change_date_format(date_string) {
@@ -44,13 +47,25 @@ class Graph extends Component {
       var date = json_datas[item]["date"];
       var calories = json_datas[item]["calories"];
       date = this.change_date_format(date);
-      var label = { x: date, y: calories };
+      var label = {
+        x: date,
+        y: calories,
+      };
       graph_datas.push(label);
     }
-    this.graph_data = graph_datas;
+    console.log(graph_datas);
+    this.setState({
+      graph_data: graph_datas,
+    });
+  }
+
+  handle_goal(goal) {
+    console.log(goal);
   }
 
   render() {
+    // 関数を呼ぶ
+    this.handle_goal(this.props.goal);
     return (
       <XYPlot height={300} width={500} xType="ordinal">
         <VerticalGridLines />
@@ -65,6 +80,7 @@ class Graph extends Component {
         />
         <LineSeries data={this.graph_data} />
       </XYPlot>
+      // <div>{this.props.goal}</div>
     );
   }
 }

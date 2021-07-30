@@ -10,8 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-	goal: 0,
-	activity: []
+      goal: 0,
+      activity: [],
     };
   }
 
@@ -45,28 +45,28 @@ class App extends Component {
 	this.getJSONData(api_url + 'goals', handler);
     }
 
-    getJSONData(url, handler) {
-	let data;
-	const xhr = new XMLHttpRequest();
-	xhr.open('GET', url, true);
-	xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-	xhr.onload = (e) => {
-	    console.log(e);
-	    data = xhr.response;
-	    // console.log('Data from ' + url + 'attrieved!');
-	    // console.log(data);
-	    handler(JSON.parse(data), e);
-	};
-	xhr.send(null);
-    }
+
+  getJSONData(url, handler) {
+    let data;
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhr.onload = (e) => {
+      console.log(e);
+      data = xhr.response;
+      // console.log('Data from ' + url + 'attrieved!');
+      // console.log(data);
+      handler(JSON.parse(data), e);
+    };
+    xhr.send(null);
+  }
 
   handleInput(input) {
-      this.setState({ goal: input });
-      
+    this.setState({ goal: input });
   }
   render() {
     return (
-	<div>
+      <div>
         <HeaderBar />
         <Graph goal={this.state.goal} />
         <UserInput
