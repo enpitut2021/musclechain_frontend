@@ -60,6 +60,19 @@ class App extends Component {
     this.getJSONData(api_url + "calories", handler);
   }
 
+    getGoalData() {
+    let handler = (data, e) => {
+      console.log(e);
+      console.log("Goal data attrieved!");
+      console.log(data);
+      this.setState({
+        goal: data["goal"],
+      });
+    };
+    this.getJSONData(api_url + "goals", handler);
+  }
+
+
     getBalance() {
 	console.log('Getting balance data...');
 	let handler = (data, e) => {
