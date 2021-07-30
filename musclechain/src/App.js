@@ -68,7 +68,7 @@ class App extends Component {
     return (
       <div>
         <HeaderBar />
-        <Graph goal={this.state.goal} />
+          <Graph goal={this.state.goal} activity={this.state.activity}/>
         <UserInput
           queryText="１日の目標消費カロリーを入力(kcal)："
           handleInput={(e) => this.handleInput(e)}
