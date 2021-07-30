@@ -8,16 +8,49 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      goal: 0,
+	goal: 0,
+	activity: []
     };
+
+      this.get_activity_data();
   }
 
+    get_activity_data() {
+	let data;
+	console.log('Getting activity data...');
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('Activity data attrieved!');
+	    console.log(data);
+	    this.setState({
+		activity: data
+	    });
+	};
+	this.getJSONData.bind(this)('http://8fadfda12fb8.ngrok.io/calories', handler);
+    }
+
+    getJSONData(url, handler) {
+	let data;
+	const xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+	xhr.onload = (e) => {
+	    console.log(e);
+	    data = xhr.response;
+	    // console.log('Data from ' + url + 'attrieved!');
+	    // console.log(data);
+	    handler(JSON.parse(data), e);
+	};
+	xhr.send(null);
+    }
+
   handleInput(input) {
-    this.setState({ goal: input });
+      this.setState({ goal: input });
+      
   }
   render() {
     return (
-      <div>
+	<div>
         <HeaderBar />
         <Graph goal={this.state.goal} />
         <UserInput
