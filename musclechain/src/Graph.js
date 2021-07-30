@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, {
+  Component
+} from "react";
 import "./App.css";
 import "../node_modules/react-vis/dist/style.css";
 import {
@@ -20,10 +22,29 @@ class Graph extends Component {
     super();
     // xとyはキー
     // 値は整数
-    this.graph_data = [];
-    this.user = "";
-    //初期化したい時はここで呼べば良さそう
-    this.process_json(json_obj);
+    this.state = {
+      graph_data: [],
+      user: ""
+    };
+
+    // この関数はエラーを吐くよ
+    // this.get_activity_data();
+  }
+
+  get_activity_data() {
+    console.log('Getting activity data...');
+    let data;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://21785dcc3c86.ngrok.io/calories', true);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.onload = (e) => {
+      console.log(e);
+      data = xhr.response;
+      console.log('Activity data attrieved!');
+      console.log(data);
+    };
+    xhr.send(null);
+    this.process_json(data);
   }
 
   change_date_format(date_string) {
@@ -44,27 +65,47 @@ class Graph extends Component {
       var date = json_datas[item]["date"];
       var calories = json_datas[item]["calories"];
       date = this.change_date_format(date);
-      var label = { x: date, y: calories };
+      var label = {
+        x: date,
+        y: calories
+      };
       graph_datas.push(label);
     }
-    this.graph_data = graph_datas;
+    this.setState({
+      graph_data: graph_datas
+    });
   }
 
   render() {
-    return (
-      <XYPlot height={300} width={500} xType="ordinal">
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis title="date" position="end" />
-        <YAxis
-          title="calories"
-          position="end"
-          style={{
-            transform: "rotate(90)",
-          }}
-        />
-        <LineSeries data={this.graph_data} />
-      </XYPlot>
+    return ( <
+      XYPlot height = {
+        300
+      }
+      width = {
+        500
+      }
+      xType = "ordinal" >
+      <
+      VerticalGridLines / >
+      <
+      HorizontalGridLines / >
+      <
+      XAxis title = "date"
+      position = "end" / >
+      <
+      YAxis title = "calories"
+      position = "end"
+      style = {
+        {
+          transform: "rotate(90)",
+        }
+      }
+      /> <
+      LineSeries data = {
+        this.state.graph_data
+      }
+      /> <
+      /XYPlot>
     );
   }
 }
