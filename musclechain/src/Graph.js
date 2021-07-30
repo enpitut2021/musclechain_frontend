@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from "react";
+import React, { Component } from "react";
 import "./App.css";
 import "../node_modules/react-vis/dist/style.css";
 import {
@@ -18,30 +16,30 @@ const json_obj = Data.activity;
 const user = Data.user_id;
 
 class Graph extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     // xとyはキー
     // 値は整数
     this.state = {
       graph_data: [],
-      user: ""
+      user: "",
     };
 
     // この関数はエラーを吐くよ
     // this.get_activity_data();
+    console.log(this.props.goal);
   }
 
   get_activity_data() {
-    console.log('Getting activity data...');
+    console.log("Getting activity data...");
     let data;
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://21785dcc3c86.ngrok.io/calories', true);
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.open("GET", "http://8fadfda12fb8.ngrok.io/calories", true);
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
     xhr.onload = (e) => {
       console.log(e);
       data = xhr.response;
-      console.log('Activity data attrieved!');
-      console.log(data);
+      console.log("Activity data attrieved!");
     };
     xhr.send(null);
     this.process_json(data);
@@ -67,45 +65,38 @@ class Graph extends Component {
       date = this.change_date_format(date);
       var label = {
         x: date,
-        y: calories
+        y: calories,
       };
       graph_datas.push(label);
     }
+    console.log(graph_datas);
     this.setState({
-      graph_data: graph_datas
+      graph_data: graph_datas,
     });
   }
 
+  handle_goal(goal) {
+    console.log(goal);
+  }
+
   render() {
-    return ( <
-      XYPlot height = {
-        300
-      }
-      width = {
-        500
-      }
-      xType = "ordinal" >
-      <
-      VerticalGridLines / >
-      <
-      HorizontalGridLines / >
-      <
-      XAxis title = "date"
-      position = "end" / >
-      <
-      YAxis title = "calories"
-      position = "end"
-      style = {
-        {
-          transform: "rotate(90)",
-        }
-      }
-      /> <
-      LineSeries data = {
-        this.state.graph_data
-      }
-      /> <
-      /XYPlot>
+    // 関数を呼ぶ
+    this.handle_goal(this.props.goal);
+    return (
+      <XYPlot height={300} width={500} xType="ordinal">
+        <VerticalGridLines />
+        <HorizontalGridLines />
+        <XAxis title="date" position="end" />
+        <YAxis
+          title="calories"
+          position="end"
+          style={{
+            transform: "rotate(90)",
+          }}
+        />
+        <LineSeries data={this.graph_data} />
+      </XYPlot>
+      // <div>{this.props.goal}</div>
     );
   }
 }

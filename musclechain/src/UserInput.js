@@ -14,7 +14,7 @@ class UserInput extends Component {
     // TODO: バックエンドAPIができたら更新した目標の値を保存
     // TODO: グラフに目標値を表示
     if (inputComp.value) {
-      console.log("updated user goal to " + inputComp.value);
+      // console.log("updated user goal to " + inputComp.value);
       this.setState({
         value: inputComp.value,
       });
