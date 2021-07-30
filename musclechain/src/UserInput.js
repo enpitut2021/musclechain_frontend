@@ -13,11 +13,13 @@ class UserInput extends Component {
     const inputComp = document.querySelector('input[type="number"]');
     // TODO: バックエンドAPIができたら更新した目標の値を保存
     // TODO: グラフに目標値を表示
-    console.log("updated user goal to " + inputComp.value);
-    this.setState({
-      value: inputComp.value,
-    });
-    this.props.handleInput(inputComp.value);
+    if (inputComp.value) {
+      console.log("updated user goal to " + inputComp.value);
+      this.setState({
+        value: inputComp.value,
+      });
+      this.props.handleInput(inputComp.value);
+    }
   }
   render() {
     return (
