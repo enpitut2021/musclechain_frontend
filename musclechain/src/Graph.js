@@ -26,23 +26,7 @@ class Graph extends Component {
     };
 
     // この関数はエラーを吐くよ
-    // this.get_activity_data();
     console.log(this.props.goal);
-  }
-
-  get_activity_data() {
-    console.log("Getting activity data...");
-    let data;
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://8fadfda12fb8.ngrok.io/calories", true);
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.onload = (e) => {
-      console.log(e);
-      data = xhr.response;
-      console.log("Activity data attrieved!");
-    };
-    xhr.send(null);
-    this.process_json(data);
   }
 
   change_date_format(date_string) {
