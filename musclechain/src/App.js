@@ -38,7 +38,7 @@ class App extends Component {
 		goal: data["ret_goal"]
 	    });
 	};
-	this.getJSONData.bind(this)('https://46f0ff1051a4.ngrok.io/goals', handler);
+	this.getJSONData.bind(this)('http://0961809a7fd9.ngrok.io/goals', handler);
     }
 
     getJSONData(url, handler) {
@@ -63,7 +63,6 @@ class App extends Component {
   render() {
     return (
 	<div>
-	    <h1>{this.state.goal}</h1>
         <HeaderBar />
         <Graph goal={this.state.goal} />
         <UserInput
