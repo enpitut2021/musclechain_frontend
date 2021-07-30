@@ -61,8 +61,26 @@ class App extends Component {
     xhr.send(null);
   }
 
+    postGoal(goal) {
+	console.log(goal);
+	let payload = JSON.stringify({
+	    "goal": goal
+	});
+	this.postJSONData(api_url + 'goals', payload);
+    }
+
+    postJSONData(url, data) {
+	const xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	//xhr.withCredentials = true;
+	// xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(data);
+    }
+
   handleInput(input) {
-    this.setState({ goal: input });
+      this.setState({ goal: input });
+      this.postGoal(input);
   }
   render() {
     return (
