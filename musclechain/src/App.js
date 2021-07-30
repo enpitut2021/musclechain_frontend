@@ -4,7 +4,7 @@ import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
 
-const api_url = "https://682e44032f57.ngrok.io/";
+const api_url = "http://9a1e77d0e83b.ngrok.io/";
 
 class App extends Component {
   constructor(props) {
