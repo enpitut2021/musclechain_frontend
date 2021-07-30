@@ -3,6 +3,7 @@ import "./App.css";
 import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
+import Balance from "./Balance";
 
 const api_url = 'https://682e44032f57.ngrok.io/';
 
@@ -11,15 +12,18 @@ class App extends Component {
     super(props);
     this.state = {
       goal: 0,
-      activity: [],
+	activity: [],
+	balance: 100
     };
   }
 
     componentDidMount() {
 	this.get_activity_data();
 	this.getGoalData();
+	this.getBalance();
     }
 
+    // 理想的じゃない関数のまとめ方になってるから直したい
     get_activity_data() {
 	console.log('Getting activity data...');
 	let handler = (data, e) => {
@@ -43,6 +47,19 @@ class App extends Component {
 	    });
 	};
 	this.getJSONData(api_url + 'goals', handler);
+    }
+
+    getBalance() {
+	console.log('Getting balance data...');
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('Balance data attrieved!');
+	    console.log(data);
+	    this.setState({
+		balance: data["balance"]
+	    });
+	};
+	// this.getJSONData(api_url + 'calories', handler);
     }
 
 
@@ -91,6 +108,7 @@ class App extends Component {
           queryText="１日の目標消費カロリーを入力(kcal)："
           handleInput={(e) => this.handleInput(e)}
         />
+	  <Balance balance={this.state.balance}/>
       </div>
     );
   }
