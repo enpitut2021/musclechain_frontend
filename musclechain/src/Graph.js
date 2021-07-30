@@ -6,6 +6,9 @@ import {
   LineSeries,
   VerticalGridLines,
   HorizontalGridLines,
+  VerticalBarSeries,
+  DiscreteColorLegend,
+  ChartLabel,
   XAxis,
   YAxis,
 } from "react-vis";
@@ -23,6 +26,8 @@ class Graph extends Component {
     this.state = {
       graph_data: [],
       user: "",
+      goal_color: "#fa6470",
+      calorie_color: "#64bbfa",
     };
   }
 
@@ -81,20 +86,33 @@ class Graph extends Component {
     const data = this.handle_activity(this.props.activity);
     const goal = this.handle_goal(this.props.goal, data);
     return (
-      <XYPlot height={300} width={1000} xType="ordinal">
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis title="date" position="end" />
-        <YAxis
-          title="calories"
-          position="end"
-          style={{
-            transform: "rotate(90)",
-          }}
+      <div>
+        <DiscreteColorLegend
+          items={[
+            { title: "calories" },
+            { title: "goal", color: this.state.goal_color },
+          ]}
+          orientation="horizontal"
         />
-        <LineSeries data={data} />
-        <LineSeries data={goal} />
-      </XYPlot>
+        <XYPlot yPadding={40} height={300} width={1000} xType="ordinal">
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis title="" />
+          <YAxis
+            title="calories"
+            style={{
+              transform: "rotate(-90)",
+            }}
+          />
+          <LineSeries data={data} color={this.state.calorie_color} />
+          <VerticalBarSeries
+            data={data}
+            barWidth={0.6}
+            color={this.state.calorie_color}
+          />
+          <LineSeries data={goal} color={this.state.goal_color} />
+        </XYPlot>
+      </div>
       // <div>{this.props.goal}</div>
     );
   }
