@@ -4,7 +4,7 @@ import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
 
-const api_url = 'https://682e44032f57.ngrok.io/';
+const api_url = "https://682e44032f57.ngrok.io/";
 
 class App extends Component {
   constructor(props) {
@@ -15,36 +15,35 @@ class App extends Component {
     };
   }
 
-    componentDidMount() {
-	this.get_activity_data();
-	this.getGoalData();
-    }
+  componentDidMount() {
+    this.get_activity_data();
+    this.getGoalData();
+  }
 
-    get_activity_data() {
-	console.log('Getting activity data...');
-	let handler = (data, e) => {
-	    console.log(e);
-	    console.log('Activity data attrieved!');
-	    console.log(data);
-	    this.setState({
-		activity: data
-	    });
-	};
-	this.getJSONData(api_url + 'calories', handler);
-    }
+  get_activity_data() {
+    console.log("Getting activity data...");
+    let handler = (data, e) => {
+      console.log(e);
+      console.log("Activity data attrieved!");
+      console.log(data);
+      this.setState({
+        activity: data,
+      });
+    };
+    this.getJSONData(api_url + "calories", handler);
+  }
 
-    getGoalData() {
-	let handler = (data, e) => {
-	    console.log(e);
-	    console.log('Goal data attrieved!');
-	    console.log(data);
-	    this.setState({
-		goal: data["goal"]
-	    });
-	};
-	this.getJSONData(api_url + 'goals', handler);
-    }
-
+  getGoalData() {
+    let handler = (data, e) => {
+      console.log(e);
+      console.log("Goal data attrieved!");
+      console.log(data);
+      this.setState({
+        goal: data["goal"],
+      });
+    };
+    this.getJSONData(api_url + "goals", handler);
+  }
 
   getJSONData(url, handler) {
     let data;
@@ -68,7 +67,7 @@ class App extends Component {
     return (
       <div>
         <HeaderBar />
-          <Graph goal={this.state.goal} activity={this.state.activity}/>
+        <Graph goal={this.state.goal} activity={this.state.activity} />
         <UserInput
           queryText="１日の目標消費カロリーを入力(kcal)："
           handleInput={(e) => this.handleInput(e)}
