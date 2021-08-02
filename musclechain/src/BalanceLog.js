@@ -31,7 +31,7 @@ class BalanceLog extends Component {
 	});
 	return (
 	    <div>
-		<XYPlot width={300} height={300}>
+		<XYPlot width={300} height={300} colorType="category">
 		    <VerticalGridLines />
 		    <HorizontalGridLines />
 		    <XAxis />
