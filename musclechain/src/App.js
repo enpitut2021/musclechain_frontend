@@ -126,7 +126,7 @@ class App extends Component {
       this.setState({ goal: input });
       this.postGoal(input);
   }
-  render() {
+    render() {
     return (
       <div>
         <HeaderBar />
