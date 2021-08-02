@@ -164,6 +164,13 @@ class App extends Component {
       this.setState({ goal: input });
       this.postGoal(input);
   }
+
+    hanleRoomEntrance(roomId) {
+	let data = JSON.stringify({
+	    "myroom": roomId,
+	});
+	this.postJSONData(api_url + 'myroom', data);
+    }
     
   render() {
     return (
@@ -177,7 +184,7 @@ class App extends Component {
 	  <Balance balance={this.state.balance}/>
 	  <BalanceLog balLog={this.state.balLog} />
 	  <CompGraph myData={myData} compData={compData}/>
-	  <RoomsList rooms={this.state.rooms} />
+	  <RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
       </div>
     );
   }
