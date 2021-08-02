@@ -1,0 +1,43 @@
+import React, { Component } from "react";
+import "./App.css";
+import "../node_modules/react-vis/dist/style.css";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+class RoomsList extends Component {
+    constructor(props) {
+	super(props);
+	
+    }
+    
+    enterRoom(id) {
+	
+    }
+    
+    render() {
+	let rooms_copy = this.props.rooms;
+	rooms_copy.unshift({room_id: "部屋ID", participants: "メンバー", start_date: "開始日", end_date: "終了日"});
+	let listItems = rooms_copy.map((item) => {
+	    return (
+		<tr>
+		    <th style={{ padding: 15 }}>{item.room_id}</th>
+		    <th style={{ padding: 15 }}>{item.participants}</th>
+		    <th style={{ padding: 15 }}>{item.start_date}</th>
+		    <th style={{ padding: 15 }}>{item.end_date}</th>
+		    {(item.room_id!="部屋ID") && <th style={{ padding: 15 }}><button
+			type="button"
+										onClick={() => this.props.handleRoomEntrance(item.room_id)}>部屋に入る</button></th>}
+		</tr>);
+	});
+	
+	return (
+	    <div>
+		<table style={{ width: "100%", border: "1px solid",  padding: 15}}>
+		    {listItems}
+		</table>
+	    </div>
+	);
+    }
+}
+
+export default RoomsList;
