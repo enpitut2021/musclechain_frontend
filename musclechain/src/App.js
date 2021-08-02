@@ -6,8 +6,23 @@ import UserInput from "./UserInput";
 import Balance from "./Balance";
 import BalanceLog from "./BalanceLog";
 import CompGraph from "./CompGraph";
+import firebase from "firebase/app";
 
 const api_url = "http://9a1e77d0e83b.ngrok.io/";
+
+//„Åì„Åì„Åã„Çâ
+function firebase_init() {
+  var firebaseConfig = {
+    apiKey: "AIzaSyCigg4A1qraKIRlL-8NZ2ueZLz3bRJxxHc",
+    authDomain: "enpit-5b754.firebaseapp.com",
+    projectId: "enpit-5b754",
+    storageBucket: "enpit-5b754.appspot.com",
+    messagingSenderId: "74928683689",
+    appId: "1:74928683689:web:c7b45d86867e73f78607b8",
+  };
+
+  firebase.initializeApp(firebaseConfig);
+}
 
 const balanceLogSample = [
     {"date": "7/26", "diff": 10},
@@ -40,6 +55,8 @@ class App extends Component {
   }
 
     componentDidMount() {
+	firebase_init();
+	
 	this.get_activity_data();
 	this.getGoalData();
 	this.getBalance();
