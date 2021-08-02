@@ -7,8 +7,11 @@ import Balance from "./Balance";
 import BalanceLog from "./BalanceLog";
 import CompGraph from "./CompGraph";
 import RoomsList from "./RoomsList";
+import firebase from "firebase/app";
 
 const api_url = "http://9a1e77d0e83b.ngrok.io/";
+
+
 
 const balanceLogSample = [
     {"date": "7/26", "diff": 10},
@@ -42,15 +45,30 @@ class App extends Component {
       goal: 0,
 	activity: [],
 	balance: 110,
-	balLog: []
+	balLog: [],
+	rooms: []
     };
   }
 
     componentDidMount() {
+	this.getRooms();
 	this.get_activity_data();
 	this.getGoalData();
 	this.getBalance();
 	this.getBalanceLog();
+    }
+
+    getRooms() {
+	console.log("Getting rooms data")
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('Rooms data attrieved!');
+	    console.log(data);
+	    this.setState({
+		rooms: data
+	    });
+	};
+	this.getJSONData(api_url + 'rooms', handler);
     }
 
     // 理想的じゃない関数のまとめ方になってるから直したい
@@ -66,20 +84,7 @@ class App extends Component {
 	};
 	this.getJSONData(api_url + 'calories', handler);
     }
-
-  get_activity_data() {
-    console.log("Getting activity data...");
-    let handler = (data, e) => {
-      console.log(e);
-      console.log("Activity data attrieved!");
-      console.log(data);
-      this.setState({
-        activity: data,
-      });
-    };
-    this.getJSONData(api_url + "calories", handler);
-  }
-
+    
     getGoalData() {
     let handler = (data, e) => {
       console.log(e);
@@ -159,6 +164,7 @@ class App extends Component {
       this.setState({ goal: input });
       this.postGoal(input);
   }
+    
   render() {
     return (
       <div>
@@ -171,7 +177,7 @@ class App extends Component {
 	  <Balance balance={this.state.balance}/>
 	  <BalanceLog balLog={this.state.balLog} />
 	  <CompGraph myData={myData} compData={compData}/>
-	  <RoomsList roomsData={roomsSample}/>
+	  <RoomsList rooms={this.state.rooms} />
       </div>
     );
   }
