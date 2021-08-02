@@ -6,6 +6,7 @@ import UserInput from "./UserInput";
 import Balance from "./Balance";
 import BalanceLog from "./BalanceLog";
 import CompGraph from "./CompGraph";
+import RoomsList from "./RoomsList";
 
 const api_url = "http://9a1e77d0e83b.ngrok.io/";
 
@@ -15,6 +16,12 @@ const balanceLogSample = [
     {"date": "7/28", "diff": 10},
     {"date": "7/29", "diff": 23},
     {"date": "7/30", "diff": -3}, ];
+
+const roomsSample = [
+    {roomId: "room1", members: [ "user1", "user2", ]},
+    {roomId: "room2", members: [ "user3",  ]},
+    {roomId: "room3", members: [ "user4", "user5", "user6" ]},
+];
 
 const myData = [
     {x: '7/10', y: 10},
@@ -164,6 +171,7 @@ class App extends Component {
 	  <Balance balance={this.state.balance}/>
 	  <BalanceLog balLog={this.state.balLog} />
 	  <CompGraph myData={myData} compData={compData}/>
+	  <RoomsList roomsData={roomsSample}/>
       </div>
     );
   }
