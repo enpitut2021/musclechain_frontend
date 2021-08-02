@@ -5,6 +5,7 @@ import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
 import Balance from "./Balance";
 import BalanceLog from "./BalanceLog";
+import CompGraph from "./CompGraph";
 
 const api_url = "http://9a1e77d0e83b.ngrok.io/";
 
@@ -150,6 +151,7 @@ class App extends Component {
         />
 	  <Balance balance={this.state.balance}/>
 	  <BalanceLog balLog={this.state.balLog} />
+	  <CompGraph />
       </div>
     );
   }
