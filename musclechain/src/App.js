@@ -46,7 +46,7 @@ class App extends Component {
 	this.state = {
 	    goal: 0,
 	    activity: [],
-	    balance: 110,
+	    balance: 440,
 	    balLog: [],
 	    rooms: []
 	};
@@ -162,12 +162,6 @@ class App extends Component {
 	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(data);
     }
-
-    handleInput(input) {
-	this.setState({ goal: input });
-	this.postGoal(input);
-    }
-
     hanleRoomEntrance(roomId) {
 	let data = JSON.stringify({
 	    "myroom": roomId,
@@ -188,9 +182,9 @@ class App extends Component {
 		<BalanceLog balLog={this.state.balLog} />
 		<CompGraph myData={myData} compData={compData}/>
 		<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
-		</div>
-		);
-		}
-	    }
+	    </div>
+	);
+    }
+}
 
 export default App;
