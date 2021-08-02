@@ -22,6 +22,7 @@ const balanceLogSample = [
 ];
 
 const roomsSample = [
+    {room_id: "部屋ID", participants: "メンバー", start_date: "開始日", end_date: "終了日"},
     {room_id: "room1", participants: [ "user1", "user2", ], start_date: "7/12", end_date: "7/30" },
     {room_id: "room2", participants: [ "user3", "user4", ], start_date: "7/13", end_date: "7/29" },
     {room_id: "room3", participants: [ "user5", "user6", ], start_date: "7/2", end_date: "8/5" },

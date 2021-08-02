@@ -15,9 +15,7 @@ class RoomsList extends Component {
     }
     
     render() {
-	let rooms_copy = this.props.rooms;
-	rooms_copy.unshift({room_id: "部屋ID", participants: "メンバー", start_date: "開始日", end_date: "終了日"});
-	let listItems = rooms_copy.map((item) => {
+	let listItems =this.props.rooms.map((item) => {
 	    return (
 		<tr>
 		    <th style={{ padding: 15 }}>{item.room_id}</th>
