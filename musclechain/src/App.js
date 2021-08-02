@@ -16,6 +16,18 @@ const balanceLogSample = [
     {"date": "7/29", "diff": 23},
     {"date": "7/30", "diff": -3}, ];
 
+const myData = [
+    {x: '7/10', y: 10},
+    {x: '7/11', y: 32},
+    {x: '7/12', y: 11},
+]
+
+const compData = [
+    {x: '7/10', y: 33},
+    {x: '7/11', y: 22},
+    {x: '7/12', y: 37},
+]
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -151,7 +163,7 @@ class App extends Component {
         />
 	  <Balance balance={this.state.balance}/>
 	  <BalanceLog balLog={this.state.balLog} />
-	  <CompGraph />
+	  <CompGraph myData={myData} compData={compData}/>
       </div>
     );
   }
