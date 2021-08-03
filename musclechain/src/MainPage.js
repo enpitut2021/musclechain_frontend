@@ -30,18 +30,6 @@ const roomsSample = [
     {room_id: "room3", participants: [ "user5", "user6", ], start_date: "7/2", end_date: "8/5" },
 ];
 
-const myData = [
-    {x: '7/10', y: 10},
-    {x: '7/11', y: 32},
-    {x: '7/12', y: 11},
-]
-
-const compData = [
-    {x: '7/10', y: 33},
-    {x: '7/11', y: 22},
-    {x: '7/12', y: 37},
-]
-
 class MainPage extends Component {
     constructor(props) {
 	super(props);
@@ -184,7 +172,6 @@ class MainPage extends Component {
 		    />
 		    <Balance balance={this.state.balance}/>
 		    <BalanceLog balLog={this.state.balLog} />
-		    <CompGraph myData={myData} compData={compData}/>
 			<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
 			</div>
 		</div>
