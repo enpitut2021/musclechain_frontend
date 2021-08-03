@@ -3,8 +3,6 @@ import "./App.css";
 import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
 import UserInput from "./UserInput";
-import Balance from "./Balance";
-import BalanceLog from "./BalanceLog";
 import CompGraph from "./CompGraph";
 import RoomsList from "./RoomsList";
 
@@ -12,15 +10,6 @@ import background from "./res/muscle.png";
 
 const api_url = "http://618cd76b2ff4.ngrok.io/";
 
-
-
-const balanceLogSample = [
-    { date: "7/26", diff: 10 },
-    { date: "7/27", diff: 10 },
-    { date: "7/28", diff: 10 },
-    { date: "7/29", diff: 23 },
-    { date: "7/30", diff: -3 },
-];
 
 const roomsSample = [
     {room_id: "部屋ID", participants: "メンバー", start_date: "開始日", end_date: "終了日"},
@@ -84,35 +73,6 @@ class MainPage extends Component {
 	this.getJSONData(api_url + 'calories', handler, body);
     }
 
-    getBalance() {
-	console.log("Getting balance data...");
-	let handler = (data, e) => {
-	    console.log(e);
-	    console.log("Balance data attrieved!");
-	    console.log(data);
-	    this.setState({
-		balance: data["balance"],
-	    });
-	};
-	// this.getJSONData(api_url + 'calories', handler);
-    }
-
-    getBalanceLog() {
-	console.log("Getting balance log data...");
-	let handler = (data, e) => {
-	    console.log(e);
-	    console.log("Balance log data attrieved!");
-	    console.log(data);
-	    this.setState({
-		balance: data["balanceLog"],
-	    });
-	};
-	// this.getJSONData(api_url + 'calories', handler);
-	this.setState({
-	    balLog: balanceLogSample,
-	});
-    }
-
     getJSONData(url, handler, body = null) {
 	let data;
 	const xhr = new XMLHttpRequest();
@@ -151,8 +111,6 @@ class MainPage extends Component {
 		<HeaderBar style={{ zIndex: 3 }}/>
 		<div style={{ backgroundImage: `url(${background})`, backgroundSize: 200 }}>
 		    <div style={{ height: '100%', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
-			<Balance balance={this.state.balance}/>
-			<BalanceLog balLog={this.state.balLog} />
 			<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
 		    </div>
 		</div>
