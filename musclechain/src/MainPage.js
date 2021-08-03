@@ -9,6 +9,8 @@ import CompGraph from "./CompGraph";
 import RoomsList from "./RoomsList";
 import firebase from "firebase/app";
 
+import background from "./res/muscle.png";
+
 const api_url = "https://76caba17d405.ngrok.io/";
 
 
@@ -192,16 +194,20 @@ class MainPage extends Component {
     render() {
 	return (
 	    <div>
-		<HeaderBar />
-		<Graph goal={this.state.goal} activity={this.state.activity} />
-		<UserInput
-		    queryText="１日の目標消費カロリーを入力(kcal)："
-		    handleInput={(e) => this.handleInput(e)}
-		/>
-		<Balance balance={this.state.balance}/>
-		<BalanceLog balLog={this.state.balLog} />
-		<CompGraph myData={myData} compData={compData}/>
-		<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
+		<HeaderBar style={{ zIndex: 3 }}/>
+		<div style={{ backgroundImage: `url(${background})`, backgroundSize: 200 }}>
+		    <div style={{ height: '100%', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
+		    <Graph goal={this.state.goal} activity={this.state.activity} />
+		    <UserInput
+			queryText="１日の目標消費カロリーを入力(kcal)："
+			handleInput={(e) => this.handleInput(e)}
+		    />
+		    <Balance balance={this.state.balance}/>
+		    <BalanceLog balLog={this.state.balLog} />
+		    <CompGraph myData={myData} compData={compData}/>
+			<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
+			</div>
+		</div>
 	    </div>
 	);
     }
