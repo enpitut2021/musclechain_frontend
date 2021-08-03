@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { Link, BrowserRouter, Redirect } from "react-router-dom";
 
-const api_url = "http://2d576f5784b1.ngrok.io/";
+const api_url = "http://5e321a6b21f3.ngrok.io/";
 
 class LoginPage extends Component {
     constructor() {

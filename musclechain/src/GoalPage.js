@@ -6,7 +6,7 @@ import UserInput from "./UserInput";
 
 import background from "./res/muscle.png";
 
-const api_url = "http://2d576f5784b1.ngrok.io/";
+const api_url = "http://5e321a6b21f3.ngrok.io/";
 
 class GoalPage extends Component {
     constructor() {
