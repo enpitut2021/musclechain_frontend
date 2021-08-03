@@ -9,7 +9,7 @@ import CompGraph from "./CompGraph";
 import RoomsList from "./RoomsList";
 import firebase from "firebase/app";
 
-const api_url = "http://8d085e270736.ngrok.io/";
+const api_url = "https://76caba17d405.ngrok.io/";
 
 
 
