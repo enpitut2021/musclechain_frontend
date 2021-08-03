@@ -42,7 +42,7 @@ class LoginPage extends Component {
     }
     render() {
 	if (this.state.loggedIn)
-	    return (<Redirect to="/main" />);
+	    return (<Redirect to="/battle" />);
 	return (
 	    <div>
 		<h1>{(this.state.loginMode) ? 'ログイン' : '登録'}</h1>

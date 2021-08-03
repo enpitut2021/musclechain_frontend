@@ -46,10 +46,10 @@ class GoalPage extends Component {
 		activity: data
 	    });
 	};
-	let body = {
-	    uid: this.state.uid
-	};
-	console.log("body")
+	let body = JSON.stringify({
+	    uid: this.state.uid,
+	});
+	console.log("body");
 	console.log(body);
 	this.getJSONData(api_url + 'firebase/calories', handler, body);
     }

@@ -60,10 +60,10 @@ class BattlePage extends Component {
 		rooms: data
 	    });
 	};
-	// this.getJSONData(api_url + 'rooms', handler);
-	this.setState({
-	    rooms: roomsSample
-	});
+	this.getJSONData(api_url + 'firebase/rooms', handler);
+	// this.setState({
+	//     rooms: roomsSample
+	// });
     }
 
     // 理想的じゃない関数のまとめ方になってるから直したい
