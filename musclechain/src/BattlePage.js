@@ -37,18 +37,61 @@ class BattlePage extends Component {
 	    balance: 440,
 	    balLog: [],
 	    rooms: [],
-	    uid: null
+	    uid: null,
+	    compid: null,
+	    myData: [],
+	    compData: [],
+	    userRoom: null
 	};
     }
 
     componentDidMount() {
 	this.getRooms();
 
+	this.get_uid();
+	//compid はルームの情報取れてから
 	// this.get_uid();
 	// this.get_activity_data());  これはget_uidのhandlerでよぶ（uid必要だから）
     }
 
-    
+    get_uid() {
+	console.log("Getting uid data")
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('uid data attrieved!');
+	    console.log(data);
+	    this.setState({
+		uid: data["uid"]
+	    });
+	    this.getMyGraphData();
+	};
+	this.getJSONData(api_url + 'firebase/uid', handler);
+    }
+
+    get_compid() {
+	console.log("Getting compid data");
+	    
+	let handler = (data) => {
+	    console.log('userinfo data attrieved!');
+	    console.log(data);
+	    this.setState({
+		userRoom: JSON.parse(data)["room_id"]
+	    });
+	    this.state.rooms.forEach((room) => {
+		console.log(room["room_document_id"]);
+		if (this.state.userRoom==room["room_document_id"]) {
+		    console.log(room);
+		    let compid = (room["participants"][0] == this.state.uid) ? room["participants"][1] : room["participants"][0];
+		    this.setState({compid: compid});
+		    this.getCompGraphData();
+		}
+	    });
+	};
+	let myBody = JSON.stringify({
+	    uid: this.state.uid
+	});
+	this.postJSONData(api_url + 'firebase/userinfo', myBody, handler);
+    }
 
     getRooms() {
 	console.log("Getting rooms data")
@@ -59,6 +102,7 @@ class BattlePage extends Component {
 	    this.setState({
 		rooms: data
 	    });
+	    this.get_compid();
 	};
 	this.getJSONData(api_url + 'firebase/rooms', handler);
 	// this.setState({
@@ -67,20 +111,35 @@ class BattlePage extends Component {
     }
 
     // 理想的じゃない関数のまとめ方になってるから直したい
-    get_activity_data() {
+    getMyGraphData() {
 	console.log('Getting activity data...');
-	let handler = (data, e) => {
-	    console.log(e);
+	let myHandler = (data) => {
 	    console.log('Activity data attrieved!');
 	    console.log(data);
 	    this.setState({
-		activity: data
+		myData: JSON.parse(data)
 	    });
 	};
-	let body = {
+	let myBody = JSON.stringify({
 	    uid: this.state.uid
+	});
+	this.postJSONData(api_url + 'firebase/calories', myBody, myHandler);
+    }
+
+    // 理想的じゃない関数のまとめ方になってるから直したい
+    getCompGraphData() {
+	console.log('Getting activity data...');
+	let compHandler = (data) => {
+	    console.log('comp activity data attrieved!');
+	    console.log(data);
+	    this.setState({
+		compData: JSON.parse(data)
+	    });
 	};
-	this.getJSONData(api_url + 'calories', handler, body);
+	let compBody = JSON.stringify({
+	    uid: this.state.compid
+	});
+	this.postJSONData(api_url + 'firebase/calories', compBody, compHandler);
     }
 
     getJSONData(url, handler, body = null) {
@@ -98,13 +157,19 @@ class BattlePage extends Component {
 	xhr.send(body);
     }
 
-    postJSONData(url, data) {
+    postJSONData(url, data, handler = () => {}) {
 	const xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
+	xhr.onreadystatechange = function() {
+	    if (xhr.readyState === 4) {
+		handler(xhr.response);
+	    }
+	}
 	//xhr.withCredentials = true;
 	// xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(data);
+	
     }
     
     hanleRoomEntrance(roomId) {
@@ -121,7 +186,7 @@ class BattlePage extends Component {
 		<HeaderBar style={{ zIndex: 3 }}/>
 		<div style={{ backgroundImage: `url(${background})`, backgroundSize: 200 }}>
 		    <div style={{ height: '100%', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
-			<CompGraph myData={myData} compData={compData}/>
+			<CompGraph myData={this.state.myData} compData={this.state.compData}/>
 			<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
 		    </div>
 		</div>
