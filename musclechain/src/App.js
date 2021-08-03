@@ -4,6 +4,7 @@ import "./App.css";
 import LoginPage from "./LoginPage";
 import MainPage from "./MainPage";
 import BattlePage from "./BattlePage";
+import GoalPage from "./GoalPage";
 
 class App extends Component {
     render() {
@@ -13,6 +14,7 @@ class App extends Component {
 		    <Route exact path="/" component={LoginPage}/>
 		    <Route exact path="/main" component={MainPage}/>
 		    <Route exact path="/battle" component={BattlePage} />
+		    <Route exact path="/goal" component={GoalPage} />
 		</Switch>
 	    </BrowserRouter>
 	);

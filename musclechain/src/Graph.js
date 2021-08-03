@@ -53,7 +53,7 @@ class Graph extends Component {
         x: date,
         y: calories,
       };
-      graph_datas.push(label);
+	graph_datas.push(label);
     }
     console.log("process data");
     console.log(graph_datas);
@@ -117,5 +117,6 @@ class Graph extends Component {
     );
   }
 }
+
 
 export default Graph;

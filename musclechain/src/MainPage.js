@@ -7,11 +7,10 @@ import Balance from "./Balance";
 import BalanceLog from "./BalanceLog";
 import CompGraph from "./CompGraph";
 import RoomsList from "./RoomsList";
-import firebase from "firebase/app";
 
 import background from "./res/muscle.png";
 
-const api_url = "https://76caba17d405.ngrok.io/";
+const api_url = "http://618cd76b2ff4.ngrok.io/";
 
 
 
@@ -34,8 +33,6 @@ class MainPage extends Component {
     constructor(props) {
 	super(props);
 	this.state = {
-	    goal: 0,
-	    activity: [],
 	    balance: 440,
 	    balLog: [],
 	    rooms: [],
@@ -45,27 +42,14 @@ class MainPage extends Component {
 
     componentDidMount() {
 	this.getRooms();
-	this.getGoalData();
 	this.getBalance();
 	this.getBalanceLog();
 
-	this.get_uid();
+	// this.get_uid();
 	// this.get_activity_data());  これはget_uidのhandlerでよぶ（uid必要だから）
     }
 
-    get_uid() {
-	console.log("Getting rooms data")
-	let handler = (data, e) => {
-	    console.log(e);
-	    console.log('uid data attrieved!');
-	    console.log(data);
-	    this.setState({
-		uid: data
-	    });
-	    this.get_activity_data();
-	};
-	this.getJSONData(api_url + 'firebase/uid', handler);
-    }
+    
 
     getRooms() {
 	console.log("Getting rooms data")
@@ -98,18 +82,6 @@ class MainPage extends Component {
 	    uid: this.state.uid
 	};
 	this.getJSONData(api_url + 'calories', handler, body);
-    }
-    
-    getGoalData() {
-	let handler = (data, e) => {
-	    console.log(e);
-	    console.log("Goal data attrieved!");
-	    console.log(data);
-	    this.setState({
-		goal: data["goal"],
-	    });
-	};
-	this.getJSONData(api_url + "goals", handler);
     }
 
     getBalance() {
@@ -156,14 +128,6 @@ class MainPage extends Component {
 	xhr.send(body);
     }
 
-    postGoal(goal) {
-	console.log(goal);
-	let payload = JSON.stringify({
-	    goal: goal,
-	});
-	this.postJSONData(api_url + "goals", payload);
-    }
-
     postJSONData(url, data) {
 	const xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -172,28 +136,25 @@ class MainPage extends Component {
 	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(data);
     }
+    
     hanleRoomEntrance(roomId) {
 	let data = JSON.stringify({
 	    "myroom": roomId,
 	});
 	this.postJSONData(api_url + 'myroom', data);
     }
-    
+
+
     render() {
 	return (
 	    <div>
 		<HeaderBar style={{ zIndex: 3 }}/>
 		<div style={{ backgroundImage: `url(${background})`, backgroundSize: 200 }}>
 		    <div style={{ height: '100%', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
-		    <Graph goal={this.state.goal} activity={this.state.activity} />
-		    <UserInput
-			queryText="１日の目標消費カロリーを入力(kcal)："
-			handleInput={(e) => this.handleInput(e)}
-		    />
-		    <Balance balance={this.state.balance}/>
-		    <BalanceLog balLog={this.state.balLog} />
+			<Balance balance={this.state.balance}/>
+			<BalanceLog balLog={this.state.balLog} />
 			<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
-			</div>
+		    </div>
 		</div>
 	    </div>
 	);
