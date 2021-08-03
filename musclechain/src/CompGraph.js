@@ -63,8 +63,18 @@ class CompGraph extends Component {
 	// });
 	return graph_datas;
     }
+
+    handle_activity(activity) {
+	console.log(activity);
+	let dates = Object.keys(activity);
+	let adj_activity = [];
+	dates.forEach((date) => adj_activity.push({ "date": date, "calories": activity[date] }));
+	return this.process_json(adj_activity);
+    }
     
     render() {
+	const myData = this.handle_activity(this.props.myData);
+	const compData = this.handle_activity(this.props.compData);
 	return (
 	    <div>
 		<h1>筋肉部屋内の比較</h1>
@@ -80,8 +90,8 @@ class CompGraph extends Component {
 		    <HorizontalGridLines />
 		    <XAxis />
 		    <YAxis />
-		    <VerticalBarSeries data={this.state.myData} color={myColor}/>
-		    <VerticalBarSeries data={this.state.compData}  color={compColor}/>
+		    <VerticalBarSeries data={myData} color={myColor}/>
+		    <VerticalBarSeries data={compData}  color={compColor}/>
 		</XYPlot>
 	    </div>
 	);

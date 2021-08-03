@@ -64,8 +64,11 @@ class Graph extends Component {
   }
 
   handle_activity(activity) {
-    console.log(activity.activity);
-    return this.process_json(activity.activity);
+      console.log(activity);
+      let dates = Object.keys(activity);
+      let adj_activity = [];
+      dates.forEach((date) => adj_activity.push({ "date": date, "calories": activity[date] }));
+    return this.process_json(adj_activity);
   }
 
   handle_goal(goal, data) {
