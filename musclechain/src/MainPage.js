@@ -74,7 +74,7 @@ class MainPage extends Component {
 	    });
 	    this.get_activity_data();
 	};
-	this.getJSONData(api_url + 'uid', handler);
+	this.getJSONData(api_url + 'firebase/uid', handler);
     }
 
     getRooms() {
