@@ -6,7 +6,7 @@ import UserInput from "./UserInput";
 
 import background from "./res/muscle.png";
 
-const api_url = "http://5e321a6b21f3.ngrok.io/";
+const api_url = "http://beae3e33ce88.ngrok.io/";
 
 class GoalPage extends Component {
     constructor() {
@@ -38,12 +38,11 @@ class GoalPage extends Component {
     // 理想的じゃない関数のまとめ方になってるから直したい
     get_activity_data() {
 	console.log('Getting activity data...');
-	let handler = (data, e) => {
-	    console.log(e);
+	let handler = (data) => {
 	    console.log('Activity data attrieved!');
 	    console.log(data);
 	    this.setState({
-		activity: data
+		activity: JSON.parse(data)
 	    });
 	};
 	let body = JSON.stringify({
@@ -51,7 +50,7 @@ class GoalPage extends Component {
 	});
 	console.log("body");
 	console.log(body);
-	this.getJSONData(api_url + 'firebase/calories', handler, body);
+	this.postJSONData(api_url + 'firebase/calories', body, handler);
     }
     
     getGoalData() {
@@ -69,8 +68,9 @@ class GoalPage extends Component {
     getJSONData(url, handler, body = null) {
 	let data;
 	const xhr = new XMLHttpRequest();
-	xhr.open("GET", url, true);
-	xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+	xhr.open("GET", url);
+	// xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.onload = (e) => {
 	    console.log(e);
 	    data = xhr.response;
@@ -89,13 +89,19 @@ class GoalPage extends Component {
 	this.postJSONData(api_url + "goals", payload);
     }
 
-    postJSONData(url, data) {
+    postJSONData(url, data, handler = () => {}) {
 	const xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
+	xhr.onreadystatechange = function() {
+	    if (xhr.readyState === 4) {
+		handler(xhr.response);
+	    }
+	}
 	//xhr.withCredentials = true;
 	// xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(data);
+	
     }
     
     render() {

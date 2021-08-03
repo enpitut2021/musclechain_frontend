@@ -8,7 +8,7 @@ import RoomsList from "./RoomsList";
 
 import background from "./res/muscle.png";
 
-const api_url = "http://5e321a6b21f3.ngrok.io/";
+const api_url = "http://beae3e33ce88.ngrok.io/";
 
 const myData = [
     {x: '7/10', y: 10},

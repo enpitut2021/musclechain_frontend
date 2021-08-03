@@ -53,7 +53,7 @@ class Graph extends Component {
         x: date,
         y: calories,
       };
-	graph_datas.push(label);
+      graph_datas.push(label);
     }
     console.log("process data");
     console.log(graph_datas);
@@ -64,8 +64,11 @@ class Graph extends Component {
   }
 
   handle_activity(activity) {
-    console.log(activity.activity);
-    return this.process_json(activity.activity);
+      console.log(activity);
+      let dates = Object.keys(activity);
+      let adj_activity = [];
+      dates.forEach((date) => adj_activity.push({ "date": date, "calories": activity[date] }));
+    return this.process_json(adj_activity);
   }
 
   handle_goal(goal, data) {
@@ -117,6 +120,5 @@ class Graph extends Component {
     );
   }
 }
-
 
 export default Graph;
