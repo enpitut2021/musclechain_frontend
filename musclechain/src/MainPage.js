@@ -40,7 +40,7 @@ const compData = [
     {x: '7/12', y: 37},
 ]
 
-class App extends Component {
+class MainPage extends Component {
     constructor(props) {
 	super(props);
 	this.state = {
@@ -187,4 +187,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default MainPage;
