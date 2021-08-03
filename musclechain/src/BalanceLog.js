@@ -32,7 +32,7 @@ class BalanceLog extends Component {
 	return (
 	    <div>
 		<h1>貯金推移</h1>
-		<XYPlot width={300} height={300}>
+		<XYPlot width={300} height={300} colorType="category">
 		    <VerticalGridLines />
 		    <HorizontalGridLines />
 		    <XAxis />
