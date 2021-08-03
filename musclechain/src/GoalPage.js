@@ -1,57 +1,38 @@
 import React, { Component } from "react";
 import "./App.css";
-import Graph from "./Graph";
 import HeaderBar from "./HeaderBar";
+import Graph from "./Graph";
 import UserInput from "./UserInput";
-import CompGraph from "./CompGraph";
-import RoomsList from "./RoomsList";
 
 import background from "./res/muscle.png";
 
 const api_url = "http://2d576f5784b1.ngrok.io/";
 
-
-const roomsSample = [
-    {room_id: "部屋ID", participants: "メンバー", start_date: "開始日", end_date: "終了日"},
-    {room_id: "room1", participants: [ "user1", "user2", ], start_date: "7/12", end_date: "7/30" },
-    {room_id: "room2", participants: [ "user3", "user4", ], start_date: "7/13", end_date: "7/29" },
-    {room_id: "room3", participants: [ "user5", "user6", ], start_date: "7/2", end_date: "8/5" },
-];
-
-class MainPage extends Component {
-    constructor(props) {
-	super(props);
+class GoalPage extends Component {
+    constructor() {
+	super();
 	this.state = {
-	    balance: 440,
-	    balLog: [],
-	    rooms: [],
-	    uid: null
+	    goal: 0,
+	    activity: []
 	};
     }
-
     componentDidMount() {
-	this.getRooms();
-
-	// this.get_uid();
-	// this.get_activity_data());  これはget_uidのhandlerでよぶ（uid必要だから）
+	// this.getGoalData();
+	this.get_uid();
     }
 
-    
-
-    getRooms() {
-	console.log("Getting rooms data")
+    get_uid() {
+	console.log("Getting uid data")
 	let handler = (data, e) => {
 	    console.log(e);
-	    console.log('Rooms data attrieved!');
+	    console.log('uid data attrieved!');
 	    console.log(data);
 	    this.setState({
-		rooms: data
+		uid: data["uid"]
 	    });
+	    this.get_activity_data();
 	};
-	// this.getJSONData(api_url + 'rooms', handler);
-	this.setState({
-	    rooms: roomsSample
-	});
+	this.getJSONData(api_url + 'firebase/uid', handler);
     }
 
     // 理想的じゃない関数のまとめ方になってるから直したい
@@ -68,7 +49,21 @@ class MainPage extends Component {
 	let body = {
 	    uid: this.state.uid
 	};
-	this.getJSONData(api_url + 'calories', handler, body);
+	console.log("body")
+	console.log(body);
+	this.getJSONData(api_url + 'firebase/calories', handler, body);
+    }
+    
+    getGoalData() {
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log("Goal data attrieved!");
+	    console.log(data);
+	    this.setState({
+		goal: data["goal"],
+	    });
+	};
+	this.getJSONData(api_url + "goals", handler);
     }
 
     getJSONData(url, handler, body = null) {
@@ -86,6 +81,14 @@ class MainPage extends Component {
 	xhr.send(body);
     }
 
+    postGoal(goal) {
+	console.log(goal);
+	let payload = JSON.stringify({
+	    goal: goal,
+	});
+	this.postJSONData(api_url + "goals", payload);
+    }
+
     postJSONData(url, data) {
 	const xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -95,21 +98,17 @@ class MainPage extends Component {
 	xhr.send(data);
     }
     
-    hanleRoomEntrance(roomId) {
-	let data = JSON.stringify({
-	    "myroom": roomId,
-	});
-	this.postJSONData(api_url + 'myroom', data);
-    }
-
-
     render() {
 	return (
 	    <div>
 		<HeaderBar style={{ zIndex: 3 }}/>
 		<div style={{ backgroundImage: `url(${background})`, backgroundSize: 200 }}>
 		    <div style={{ height: '100%', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
-			<RoomsList rooms={this.state.rooms} handleRoomEntrance={(roomId) => this.handleRoomEntrance(roomId)}/>
+			<Graph goal={this.state.goal} activity={this.state.activity} />
+			<UserInput
+			    queryText="１日の目標消費カロリーを入力(kcal)："
+			    handleInput={(e) => this.handleInput(e)}
+			/>
 		    </div>
 		</div>
 	    </div>
@@ -117,4 +116,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default GoalPage;
