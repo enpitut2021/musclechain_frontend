@@ -48,16 +48,33 @@ class MainPage extends Component {
 	    activity: [],
 	    balance: 440,
 	    balLog: [],
-	    rooms: []
+	    rooms: [],
+	    uid: null
 	};
     }
 
     componentDidMount() {
 	this.getRooms();
-	this.get_activity_data();
 	this.getGoalData();
 	this.getBalance();
 	this.getBalanceLog();
+
+	this.get_uid();
+	// this.get_activity_data());  これはget_uidのhandlerでよぶ（uid必要だから）
+    }
+
+    get_uid() {
+	console.log("Getting rooms data")
+	let handler = (data, e) => {
+	    console.log(e);
+	    console.log('uid data attrieved!');
+	    console.log(data);
+	    this.setState({
+		uid: data
+	    });
+	    this.get_activity_data();
+	};
+	this.getJSONData(api_url + 'firebase/uid', handler);
     }
 
     getRooms() {
@@ -87,7 +104,10 @@ class MainPage extends Component {
 		activity: data
 	    });
 	};
-	this.getJSONData(api_url + 'calories', handler);
+	let body = {
+	    uid: this.state.uid
+	};
+	this.getJSONData(api_url + 'calories', handler, body);
     }
     
     getGoalData() {
@@ -131,7 +151,7 @@ class MainPage extends Component {
 	});
     }
 
-    getJSONData(url, handler) {
+    getJSONData(url, handler, body = null) {
 	let data;
 	const xhr = new XMLHttpRequest();
 	xhr.open("GET", url, true);
@@ -143,7 +163,7 @@ class MainPage extends Component {
 	    // console.log(data);
 	    handler(JSON.parse(data), e);
 	};
-	xhr.send(null);
+	xhr.send(body);
     }
 
     postGoal(goal) {
