@@ -8,8 +8,14 @@ class LoginPage extends Component {
     constructor() {
 	super();
 	this.state = {
-	    loggedIn: false
+	    loggedIn: false,
+	    loginMode: true, // false で登録になる
 	}
+    }
+    changeMode() {
+	this.setState({
+	    loginMode: !this.state.loginMode
+	});
     }
     login() {
 	let email = document.querySelector('#email').value;
@@ -18,7 +24,10 @@ class LoginPage extends Component {
 	    "email": email,
 	    "password": password
 	});
-	this.postJSONData(api_url + 'firebase/register', payload);
+	if (this.state.loginMode)
+	    this.postJSONData(api_url + 'firebase/login', payload);
+	else
+	    this.postJSONData(api_url + 'firebase/register', payload);
 	this.setState({
 	    loggedIn: true
 	});
@@ -36,13 +45,18 @@ class LoginPage extends Component {
 	    return (<Redirect to="/main" />);
 	return (
 	    <div>
-		<h1>Login</h1>
+		<h1>{(this.state.loginMode) ? 'ログイン' : '登録'}</h1>
 		<h3>メールアドレス:</h3>
 		<input type="text" id="email" />
 		<h3>パスワード:</h3>
 		<input type="text" id="password" />
-		<button onClick={() => this.login()}>ログイン</button>
+		<h3></h3>
+		<button onClick={() => this.login()}>
+		    {(this.state.loginMode) ? 'ログイン' : '登録'}
+		</button>
+		<h3></h3>
 		{/*<Link to="/main">Link to Mainpage</Link>*/}
+		<button onClick={() => this.changeMode()}>登録・ログイン切り替え</button>
 	    </div>
 	);
     }
