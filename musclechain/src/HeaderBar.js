@@ -14,7 +14,7 @@ class HeaderBar extends Component {
 	if (this.state.redirectTo)
 	    return <Redirect to={this.state.redirectTo} />;
 	return (
-	    <div>
+	    <div style={{ paddingBottom: 60 }}>
 		<h1 style={{
 			fontSize: 64,
 			fontWeight: 'normal',
